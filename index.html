@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Life calendar</title>
+	<style>
+		@media print {
+			.print-hide {
+				display: none;
+			}
+		}
+		body {
+			font-family: sans-serif;
+		}
+		canvas {
+			background-color: transparent;
+		}
+		.wrapper {
+			width: 750px;
+			margin: 0 auto;
+		}
+		.panel {
+			text-align: right;
+			margin: 30px 35px 0 0;
+		}
+	</style>
+</head>
+<body>
+
+	
+<div class="wrapper">
+	<div class="print-hide panel">
+		<p>Set your birthday: <input type="date" id="b-date"></p>
+	</div>
+	<div id="life-calendar"></div>
+</div>
+
+
+<script src="src/life-calendar.js"></script>
+<script>
+(function(){
+
+	var date = document.getElementById('b-date'),
+		block = document.getElementById('life-calendar');
+
+	LC.init(block);
+
+	date.onchange = function (e) {
+		var date = new Date(Date.parse(e.target.value));
+
+		LC.update(date);
+
+		return false;
+	};
+
+}());
+</script>
+</body>
+</html>
