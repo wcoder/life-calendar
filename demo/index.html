@@ -14,9 +14,6 @@
 		}
 	</style>
 	<style>
-		body {
-			font-family: sans-serif;
-		}
 		canvas {
 			background-color: transparent;
 		}
@@ -32,6 +29,9 @@
 			<div>
 				<p>Set your birthday: <input type="date" id="b-date"></p>
 			</div>
+			<div>
+				<a href="#" class="btn btn-default" id="saveImageBtn">Save as Image</a>
+			</div>
 		</div>
 		<div class="col-md-9">
 			<h2 class="text-center text-uppercase">Life calendar</h2>
@@ -46,7 +46,8 @@
 (function(){
 
 	var date = document.getElementById('b-date'),
-		block = document.getElementById('life-calendar');
+		block = document.getElementById('life-calendar'),
+		saveImage = document.getElementById('saveImageBtn');
 
 	LC.init(block);
 
@@ -56,6 +57,14 @@
 		LC.update(date);
 
 		return false;
+	};
+	
+	saveImage.onclick = function (e) {
+		var image = block.querySelector('canvas').toDataURL("image/png");
+		image = image.replace("image/png", "image/octet-stream");
+
+		e.target.href = image;
+		e.target.download = "my-life-calendar.png";
 	};
 
 }());
