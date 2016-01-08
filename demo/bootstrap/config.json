@@ -383,6 +383,7 @@
   },
   "css": [
     "print.less",
+    "type.less",
     "grid.less",
     "forms.less",
     "buttons.less",
@@ -395,5 +396,5 @@
     "wells.less"
   ],
   "js": [],
-  "customizerUrl": "http://getbootstrap.com/customize/?id=a411accc06a213b25d0a"
+  "customizerUrl": "http://getbootstrap.com/customize/?id=55f67100f4ad433c4f8f"
 }
