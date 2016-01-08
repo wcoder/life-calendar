@@ -13,11 +13,6 @@
 			margin: 0mm;  /* this affects the margin in the printer settings */
 		}
 	</style>
-	<style>
-		canvas {
-			background-color: transparent;
-		}
-	</style>
 </head>
 <body>
 
@@ -25,7 +20,8 @@
 <div class="container">
 
 	<div class="row">
-		<div class="col-md-3 hidden-print">
+		<div class="col-md-4 hidden-print">
+			<p> </p>
 			<div>
 				<p>Set your birthday: <input type="date" id="b-date"></p>
 			</div>
@@ -35,7 +31,7 @@
 				<a href="#" class="btn btn-default" id="printPageBtn">Print</a>
 			</div>
 		</div>
-		<div class="col-md-9">
+		<div class="col-md-8">
 			<div id="life-calendar"></div>
 		</div>
 	</div>
