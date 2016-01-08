@@ -76,7 +76,7 @@
 		var image = getImageFromCanvas(),
 			doc = new jsPDF();
 		
-		doc.addImage(image, 'JPEG', 10, 10);
+		doc.addImage(image, 'JPEG', 20, 5, 170, 280);
 		doc.save(DEFAULT_CALENDAR_FILE_NAME + '.pdf');
 	};
 	
