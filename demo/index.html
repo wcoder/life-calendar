@@ -2,41 +2,45 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Life calendar</title>
-	<style>
-		@media print {
-			.print-hide {
-				display: none;
-			}
+	<link rel='stylesheet' href='bootstrap/css/bootstrap.min.css'>
+	<link rel='stylesheet' href='bootstrap/css/bootstrap-theme.min.css'>
+	<style media="print">
+		@page 
+		{
+			size: auto;   /* auto is the current printer page size */
+			margin: 0mm;  /* this affects the margin in the printer settings */
 		}
+	</style>
+	<style>
 		body {
 			font-family: sans-serif;
 		}
 		canvas {
 			background-color: transparent;
 		}
-		.wrapper {
-			width: 750px;
-			margin: 0 auto;
-		}
-		.panel {
-			text-align: right;
-			margin: 30px 35px 0 0;
-		}
 	</style>
 </head>
 <body>
 
-	
-<div class="wrapper">
-	<div class="print-hide panel">
-		<p>Set your birthday: <input type="date" id="b-date"></p>
+
+<div class="container">
+
+	<div class="row">
+		<div class="col-md-3 hidden-print">
+			<div>
+				<p>Set your birthday: <input type="date" id="b-date"></p>
+			</div>
+		</div>
+		<div class="col-md-9">
+			<div id="life-calendar"></div>
+		</div>
 	</div>
-	<div id="life-calendar"></div>
+
 </div>
 
-
-<script src="src/life-calendar.js"></script>
+<script src="../src/life-calendar.js"></script>
 <script>
 (function(){
 
