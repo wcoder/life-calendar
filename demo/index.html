@@ -29,8 +29,9 @@
 			<div>
 				<p>Set your birthday: <input type="date" id="b-date"></p>
 			</div>
-			<div>
+			<div class="btn-group">
 				<a href="#" class="btn btn-default" id="saveImageBtn">Save as Image</a>
+				<a href="#" class="btn btn-default" id="savePdfBtn">Save as PDF</a>
 			</div>
 		</div>
 		<div class="col-md-9">
@@ -40,13 +41,18 @@
 
 </div>
 
+<script src="jspdf/jspdf.min.js"></script>
 <script src="../src/life-calendar.js"></script>
 <script>
 (function(){
 
-	var date = document.getElementById('b-date'),
+	var DEFAULT_CALENDAR_FILE_NAME = 'my-life-calendar',
+		DEFAULT_IMAGE_TYPE = 'image/jpeg',
+
+		date = document.getElementById('b-date'),
 		block = document.getElementById('life-calendar'),
-		saveImage = document.getElementById('saveImageBtn');
+		saveImage = document.getElementById('saveImageBtn')
+		savePdf = document.getElementById('savePdfBtn');
 
 	LC.init(block);
 
@@ -59,12 +65,26 @@
 	};
 	
 	saveImage.onclick = function (e) {
-		var image = block.querySelector('canvas').toDataURL("image/png");
-		image = image.replace("image/png", "image/octet-stream");
+		var image = getImageFromCanvas();
+		image = image.replace(DEFAULT_IMAGE_TYPE, 'image/octet-stream');
 
 		e.target.href = image;
-		e.target.download = "my-life-calendar.png";
+		e.target.download = DEFAULT_CALENDAR_FILE_NAME + '.jpg';
 	};
+	
+	savePdf.onclick = function (e) {
+		e.preventDefault();
+		
+		var image = getImageFromCanvas(),
+			doc = new jsPDF();
+		
+		doc.addImage(image, 'JPEG', 10, 10);
+		doc.save(DEFAULT_CALENDAR_FILE_NAME + '.pdf');
+	};
+	
+	function getImageFromCanvas() {
+		return block.querySelector('canvas').toDataURL(DEFAULT_IMAGE_TYPE);
+	}
 
 }());
 </script>
