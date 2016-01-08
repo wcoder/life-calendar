@@ -19,6 +19,7 @@
 		DEF_BOX_COLOR = '#FFF',
 		PASTDAY_COLOR = '#000',
 
+		TITLE_TEXT = 'LIFE CALENDAR',
 		AXIS_LEFT_TEXT = '← Age',
 		AXIS_TOP_TEXT = 'Week of the Year →';
 
@@ -36,6 +37,7 @@
 	var bDate = null;
 
 	clearCanvas();
+	drawTitle();
 	drawAxis();
 	drawMetric();
 
@@ -85,6 +87,10 @@
 
 	function clearCanvas () {
 		ctx.clearRect(0, 0, c.width, c.height);
+	}
+	function drawTitle () {
+		ctx.textAlign = 'center';
+		ctx.fillText(TITLE_TEXT, c.width / 2, 20);
 	}
 	function drawAxis (textLeft, textTop) {
 		ctx.textAlign = 'left';
