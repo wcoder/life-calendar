@@ -32,6 +32,7 @@
 			<div class="btn-group">
 				<a href="#" class="btn btn-default" id="saveImageBtn">Save as JPG</a>
 				<a href="#" class="btn btn-default" id="savePdfBtn">Save as PDF</a>
+				<a href="#" class="btn btn-default" id="printPageBtn">Print</a>
 			</div>
 		</div>
 		<div class="col-md-9">
@@ -52,7 +53,8 @@
 		date = document.getElementById('b-date'),
 		block = document.getElementById('life-calendar'),
 		saveImage = document.getElementById('saveImageBtn')
-		savePdf = document.getElementById('savePdfBtn');
+		savePdf = document.getElementById('savePdfBtn'),
+		printPage = document.getElementById('printPageBtn');
 
 	LC.init(block);
 
@@ -80,6 +82,12 @@
 		
 		doc.addImage(image, 'JPEG', 10, 10);
 		doc.save(DEFAULT_CALENDAR_FILE_NAME + '.pdf');
+	};
+	
+	printPage.onclick = function (e) {
+		e.preventDefault();
+		
+		window.print();
 	};
 	
 	function getImageFromCanvas() {
