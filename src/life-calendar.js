@@ -14,6 +14,10 @@
 		COUNT_WEEKS = 52,
 		COUNT_YEARS = 90,
 
+		CANVAS_WIDTH = 725,
+		CANVAS_HEIHT = 1250,
+
+		DEF_BACKGROUND_COLOR = '#FFF',
 		DEF_STROKE_COLOR = '#000',
 		DEF_FILL_COLOR = '#000',
 		DEF_BOX_COLOR = '#FFF',
@@ -25,8 +29,8 @@
 
 	// canvas
 	var c = document.createElement('canvas');
-	c.width = 725;
-	c.height = 1250;
+	c.width = CANVAS_WIDTH;
+	c.height = CANVAS_HEIHT;
 	var ctx = c.getContext('2d');
 	ctx.strokeStyle = DEF_STROKE_COLOR;
 	ctx.fillStyle = DEF_FILL_COLOR;
@@ -86,7 +90,11 @@
 	// CANVAS
 
 	function clearCanvas () {
-		ctx.clearRect(0, 0, c.width, c.height);
+		ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIHT);
+		// draw background:
+		ctx.fillStyle = DEF_BACKGROUND_COLOR;
+		ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIHT);
+		ctx.fillStyle = DEF_FILL_COLOR;
 	}
 	function drawTitle () {
 		ctx.textAlign = 'center';
