@@ -27,50 +27,45 @@
 <div class="container">
 
 	<div class="row">
-		<div class="col-md-4 hidden-print" id="settings">
-			<form class="form-horizontal">
+		<div class="col-md-3 hidden-print" id="settings">
+			<form>
 
 				<div class="form-group">
-					<label for="b-date" class="col-sm-6 control-label" id="lang_set_birthday"></label>
-					<div class="col-sm-6">
-						<input type="date" class="form-control" id="b-date">
-					</div>
+					<label for="b-date" id="lang_set_birthday"></label>
+					<input type="date" class="form-control" id="b-date">
 				</div>
 
 				<div class="form-group">
-					<label for="theme" class="col-sm-6 control-label" id="lang_set_theme"></label>
-					<div class="col-sm-6">
-						<select class="form-control" id="theme">
-							<option value="0">Default</option>
-							<option value="1">Light</option>
-							<option value="2">Red</option>
-						</select>
-					</div>
+					<label for="theme" id="lang_set_theme"></label>
+					<select class="form-control" id="theme">
+						<option value="0">Default</option>
+						<option value="1">Light</option>
+						<option value="2">Red</option>
+					</select>
 				</div>
 
 				<div class="form-group">
-					<label for="lang" class="col-sm-6 control-label" id="lang_select_lang"></label>
-					<div class="col-sm-6">
-						<select class="form-control" id="lang">
-							<option value="0">Русский</option>
-							<option value="1">English</option>
-						</select>
-					</div>
+					<label for="lang" id="lang_select_lang"></label>
+					<select class="form-control" id="lang">
+						<option value="0">Русский</option>
+						<option value="1">English</option>
+					</select>
 				</div>
 
 				<div class="form-group">
-					<div class="col-md-12">
-						<div class="btn-group">
-							<a href="#" class="btn btn-default" id="lang_save_jpg"></a>
-							<a href="#" class="btn btn-default" id="lang_save_pdf"></a>
-							<a href="#" class="btn btn-default" id="lang_print"></a>
-						</div>
+					<div>
+						<label for="" id="lang_save_print"></label>
+					</div>
+					<div class="btn-group">
+						<a href="#" class="btn btn-default" id="lang_save_jpg"></a>
+						<a href="#" class="btn btn-default" id="lang_save_pdf"></a>
+						<a href="#" class="btn btn-default" id="lang_print"></a>
 					</div>
 				</div>
 
 			</form>
 		</div>
-		<div class="col-md-8">
+		<div class="col-md-9">
 			<div id="life-calendar"></div>
 		</div>
 	</div>
@@ -120,10 +115,11 @@
 		langs = [
 			{
 				settings: {
-					lang_set_birthday: "Дата рождения:",
-					lang_set_theme: "Тема:",
+					lang_set_birthday: "Дата вашего рождения:",
+					lang_set_theme: "Дизайн календаря:",
 					lang_select_lang: "Язык:",
-					lang_save_jpg: "Сохранить в JPG",
+					lang_save_print: "Сохранение или печать:",
+					lang_save_jpg: "JPG",
 					lang_save_pdf: "PDF",
 					lang_print: "Печать",
 				},
@@ -138,8 +134,9 @@
 					lang_set_birthday: "Set your birthday:",
 					lang_set_theme: "Select theme:",
 					lang_select_lang: "Select language:",
-					lang_save_jpg: "Save as JPG",
-					lang_save_pdf: "Save as PDF",
+					lang_save_print: "Save or print:",
+					lang_save_jpg: "JPG",
+					lang_save_pdf: "PDF",
 					lang_print: "Print",
 				},
 				calendar: {
