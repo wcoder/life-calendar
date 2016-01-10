@@ -10,7 +10,7 @@
 
 		TABLE_LEFT = 40,
 		TABLE_TOP = 70,
-	
+
 		COUNT_WEEKS = 52,
 		COUNT_YEARS = 90,
 
@@ -55,9 +55,17 @@
 			bDate = _bDate || new Date();
 
 			drawTable(COUNT_YEARS, COUNT_WEEKS, generateDates());
+		},
+		changeTheme: function (theme) {
+
+			DEF_STROKE_COLOR = theme.box.borderColor;
+			DEF_BOX_COLOR = theme.box.backgroundDefaultColor;
+			PASTDAY_COLOR = theme.box.backgroundPastDayColor;
+
+			drawTable(COUNT_YEARS, COUNT_WEEKS, generateDates());
 		}
 	};
-	
+
 
 	// CALENDAR
 
@@ -73,7 +81,7 @@
 		}
 		return years;
 	}
-	
+
 	function getDayObj(year, week) {
 		var weeks = year * COUNT_WEEKS + week;
 		var date = addDays(bDate, weeks * 7);
@@ -140,6 +148,7 @@
 		for (var i = 0; i < cols; i++) {
 			// color by type
 			ctx.fillStyle = values[i].isPast ? PASTDAY_COLOR : DEF_BOX_COLOR;
+			ctx.strokeStyle = DEF_STROKE_COLOR;
 
 			drawRect(TABLE_LEFT + i * BOX_SIZE, TABLE_TOP + row * BOX_SIZE);
 		}
