@@ -40,16 +40,17 @@
 	var currentDate = new Date();
 	var bDate = null;
 
-	clearCanvas();
-	drawTitle();
-	drawAxis();
-	drawMetric();
-
 	// public
 	window.LC = {
-		init: function (element) {
+		init: function (element, lang) {
 			element.appendChild(c);
-			this.update(null);
+
+			if (!!lang) {
+				this.changeLang(lang);
+			} else {
+				resetCanvas();
+				this.update(null);
+			}
 		},
 		update: function (_bDate) {
 			bDate = _bDate || new Date();
@@ -63,6 +64,14 @@
 			PASTDAY_COLOR = theme.box.backgroundPastDayColor;
 
 			drawTable(COUNT_YEARS, COUNT_WEEKS, generateDates());
+		},
+		changeLang: function (lang) {
+			TITLE_TEXT = lang.title;
+			AXIS_LEFT_TEXT = lang.left_text;
+			AXIS_TOP_TEXT = lang.top_text;
+
+			resetCanvas();
+			this.update(null);
 		}
 	};
 
@@ -96,6 +105,13 @@
 	}
 
 	// CANVAS
+
+	function resetCanvas () {
+		clearCanvas();
+		drawTitle();
+		drawAxis();
+		drawMetric();
+	}
 
 	function clearCanvas () {
 		ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIHT);

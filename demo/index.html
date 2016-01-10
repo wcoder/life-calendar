@@ -22,13 +22,13 @@
 		<div class="col-md-4 hidden-print">
 			<div class="row-fluid">
 				<div class="col-md-12 input-group">
-					<span class="input-group-addon">Set your birthday:</span>
+					<span class="input-group-addon" id="lang_set_birthday"></span>
 					<input type="date" class="form-control" id="b-date">
 				</div>
 			</div>
 			<div class="row-fluid">
 				<div class="col-md-12 input-group">
-					<span class="input-group-addon">Select theme:</span>
+					<span class="input-group-addon" id="lang_set_theme"></span>
 					<select class="form-control" id="theme">
 						<option value="0">Default</option>
 						<option value="1">Light</option>
@@ -37,10 +37,19 @@
 				</div>
 			</div>
 			<div class="row-fluid">
+				<div class="col-md-12 input-group">
+					<span class="input-group-addon" id="lang_select_lang"></span>
+					<select class="form-control" id="lang">
+						<option value="0">Русский</option>
+						<option value="1">English</option>
+					</select>
+				</div>
+			</div>
+			<div class="row-fluid">
 				<div class="col-md-12 btn-group">
-					<a href="#" class="btn btn-default" id="saveImageBtn">Save as JPG</a>
-					<a href="#" class="btn btn-default" id="savePdfBtn">Save as PDF</a>
-					<a href="#" class="btn btn-default" id="printPageBtn">Print</a>
+					<a href="#" class="btn btn-default" id="lang_save_jpg"></a>
+					<a href="#" class="btn btn-default" id="lang_save_pdf"></a>
+					<a href="#" class="btn btn-default" id="lang_print"></a>
 				</div>
 			</div>
 		</div>
@@ -61,10 +70,11 @@
 
 		date = document.getElementById('b-date'),
 		theme = document.getElementById('theme'),
+		lang = document.getElementById('lang'),
 		block = document.getElementById('life-calendar'),
-		saveImage = document.getElementById('saveImageBtn')
-		savePdf = document.getElementById('savePdfBtn'),
-		printPage = document.getElementById('printPageBtn'),
+		saveImage = document.getElementById('lang_save_jpg')
+		savePdf = document.getElementById('lang_save_pdf'),
+		printPage = document.getElementById('lang_print'),
 
 		themes = [
 			{
@@ -88,9 +98,43 @@
 					backgroundPastDayColor: '#a52126',
 				}
 			}
+		],
+
+		langs = [
+			{
+				settings: {
+					lang_set_birthday: "Дата рождения:",
+					lang_set_theme: "Тема:",
+					lang_select_lang: "Язык:",
+					lang_save_jpg: "Сохранить в JPG",
+					lang_save_pdf: "Сохранить в PDF",
+					lang_print: "Печать",
+				},
+				calendar: {
+					title: 'КАЛЕНДАРЬ ЖИЗНИ',
+					left_text: '← Возраст',
+					top_text: 'Недели года →'
+				}
+			},
+			{
+				settings: {
+					lang_set_birthday: "Set your birthday:",
+					lang_set_theme: "Select theme:",
+					lang_select_lang: "Select language:",
+					lang_save_jpg: "Save as JPG",
+					lang_save_pdf: "Save as PDF",
+					lang_print: "Print",
+				},
+				calendar: {
+					title: 'LIFE CALENDAR',
+					left_text: '← Age',
+					top_text: 'Week of the Year →'
+				}
+			}
 		];
 
-	LC.init(block);
+	updateLang(langs[0].settings);
+	LC.init(block, langs[0].calendar);
 
 	date.onchange = function (e) {
 		var date = new Date(Date.parse(e.target.value));
@@ -105,6 +149,14 @@
 		var theme = themes[themeId];
 
 		LC.changeTheme(theme);
+	};
+
+	lang.onchange = function (e) {
+		var langId = e.target.value || 0;
+		var lang = langs[langId];
+
+		updateLang(lang.settings);
+		LC.changeLang(lang.calendar);
 	};
 
 	saveImage.onclick = function (e) {
@@ -135,6 +187,15 @@
 		return block.querySelector('canvas').toDataURL(DEFAULT_IMAGE_TYPE);
 	}
 
+	function updateLang(lang) {
+		for (var key in lang)
+		{
+			if (lang.hasOwnProperty(key)) {
+				var element = document.getElementById(key);
+				element.textContent = lang[key];
+			}
+		}
+	}
 }());
 </script>
 </body>
