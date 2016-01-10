@@ -71,7 +71,7 @@
 			AXIS_TOP_TEXT = lang.top_text;
 
 			resetCanvas();
-			this.update(null);
+			this.update(bDate);
 		}
 	};
 
