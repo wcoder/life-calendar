@@ -2,48 +2,153 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Life calendar</title>
+	<link rel='stylesheet' href='bootstrap/css/bootstrap.min.css'>
+	<style media="print">
+		@page
+		{
+			size: auto;   /* auto is the current printer page size */
+			margin: 0mm;  /* this affects the margin in the printer settings */
+		}
+	</style>
 	<style>
-		@media print {
-			.print-hide {
-				display: none;
-			}
+		label {
+			font-weight: normal;
 		}
-		body {
-			font-family: sans-serif;
-		}
-		canvas {
-			background-color: transparent;
-		}
-		.wrapper {
-			width: 750px;
-			margin: 0 auto;
-		}
-		.panel {
-			text-align: right;
-			margin: 30px 35px 0 0;
+		#settings {
+			margin-top: 20px;
 		}
 	</style>
 </head>
 <body>
 
 
-<div class="wrapper">
-	<div class="print-hide panel">
-		<p>Set your birthday: <input type="date" id="b-date"></p>
+<div class="container">
+
+	<div class="row">
+		<div class="col-md-3 hidden-print" id="settings">
+			<form>
+
+				<div class="form-group">
+					<label for="b-date" id="lang_set_birthday"></label>
+					<input type="date" class="form-control" id="b-date">
+				</div>
+
+				<div class="form-group">
+					<label for="theme" id="lang_set_theme"></label>
+					<select class="form-control" id="theme">
+						<option value="0">Default</option>
+						<option value="1">Light</option>
+						<option value="2">Red</option>
+					</select>
+				</div>
+
+				<div class="form-group">
+					<label for="lang" id="lang_select_lang"></label>
+					<select class="form-control" id="lang">
+						<option value="0">Русский</option>
+						<option value="1">English</option>
+					</select>
+				</div>
+
+				<div class="form-group">
+					<div>
+						<label for="" id="lang_save_print"></label>
+					</div>
+					<div class="btn-group">
+						<a href="#" class="btn btn-default" id="lang_save_jpg"></a>
+						<a href="#" class="btn btn-default" id="lang_save_pdf"></a>
+						<a href="#" class="btn btn-default" id="lang_print"></a>
+					</div>
+				</div>
+
+			</form>
+		</div>
+		<div class="col-md-9">
+			<div id="life-calendar"></div>
+		</div>
 	</div>
-	<div id="life-calendar"></div>
+
 </div>
 
-
-<script src="./javascripts/life-calendar.js"></script>
+<script src="jspdf/jspdf.min.js"></script>
+<script src="src/life-calendar.js"></script>
 <script>
 (function(){
 
-	var date = document.getElementById('b-date'),
-		block = document.getElementById('life-calendar');
+	var DEFAULT_CALENDAR_FILE_NAME = 'my-life-calendar',
+		DEFAULT_IMAGE_TYPE = 'image/jpeg',
 
-	LC.init(block);
+		date = document.getElementById('b-date'),
+		theme = document.getElementById('theme'),
+		lang = document.getElementById('lang'),
+		block = document.getElementById('life-calendar'),
+		saveImage = document.getElementById('lang_save_jpg')
+		savePdf = document.getElementById('lang_save_pdf'),
+		printPage = document.getElementById('lang_print'),
+
+		themes = [
+			{
+				box: {
+					borderColor: '#000',
+					backgroundDefaultColor: '#FFF',
+					backgroundPastDayColor: '#000',
+				}
+			},
+			{
+				box: {
+					borderColor: '#CCC',
+					backgroundDefaultColor: '#FFF',
+					backgroundPastDayColor: '#87ccc9',
+				}
+			},
+			{
+				box: {
+					borderColor: '#CCC',
+					backgroundDefaultColor: '#FFF',
+					backgroundPastDayColor: '#a52126',
+				}
+			}
+		],
+
+		langs = [
+			{
+				settings: {
+					lang_set_birthday: "Дата вашего рождения:",
+					lang_set_theme: "Дизайн календаря:",
+					lang_select_lang: "Язык:",
+					lang_save_print: "Сохранение или печать:",
+					lang_save_jpg: "JPG",
+					lang_save_pdf: "PDF",
+					lang_print: "Печать",
+				},
+				calendar: {
+					title: 'КАЛЕНДАРЬ ЖИЗНИ',
+					left_text: '← Возраст',
+					top_text: 'Недели года →'
+				}
+			},
+			{
+				settings: {
+					lang_set_birthday: "Set your birthday:",
+					lang_set_theme: "Select theme:",
+					lang_select_lang: "Select language:",
+					lang_save_print: "Save or print:",
+					lang_save_jpg: "JPG",
+					lang_save_pdf: "PDF",
+					lang_print: "Print",
+				},
+				calendar: {
+					title: 'LIFE CALENDAR',
+					left_text: '← Age',
+					top_text: 'Week of the Year →'
+				}
+			}
+		];
+
+	updateLang(langs[0].settings);
+	LC.init(block, langs[0].calendar);
 
 	date.onchange = function (e) {
 		var date = new Date(Date.parse(e.target.value));
@@ -53,6 +158,58 @@
 		return false;
 	};
 
+	theme.onchange = function (e) {
+		var themeId = e.target.value || 0;
+		var theme = themes[themeId];
+
+		LC.changeTheme(theme);
+	};
+
+	lang.onchange = function (e) {
+		var langId = e.target.value || 0;
+		var lang = langs[langId];
+
+		updateLang(lang.settings);
+		LC.changeLang(lang.calendar);
+	};
+
+	saveImage.onclick = function (e) {
+		var image = getImageFromCanvas();
+		image = image.replace(DEFAULT_IMAGE_TYPE, 'image/octet-stream');
+
+		e.target.href = image;
+		e.target.download = DEFAULT_CALENDAR_FILE_NAME + '.jpg';
+	};
+
+	savePdf.onclick = function (e) {
+		e.preventDefault();
+
+		var image = getImageFromCanvas(),
+			doc = new jsPDF();
+
+		doc.addImage(image, 'JPEG', 20, 5, 170, 280);
+		doc.save(DEFAULT_CALENDAR_FILE_NAME + '.pdf');
+	};
+
+	printPage.onclick = function (e) {
+		e.preventDefault();
+
+		window.print();
+	};
+
+	function getImageFromCanvas() {
+		return block.querySelector('canvas').toDataURL(DEFAULT_IMAGE_TYPE);
+	}
+
+	function updateLang(lang) {
+		for (var key in lang)
+		{
+			if (lang.hasOwnProperty(key)) {
+				var element = document.getElementById(key);
+				element.textContent = lang[key];
+			}
+		}
+	}
 }());
 </script>
 </body>

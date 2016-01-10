@@ -10,10 +10,14 @@
 
 		TABLE_LEFT = 40,
 		TABLE_TOP = 70,
-	
+
 		COUNT_WEEKS = 52,
 		COUNT_YEARS = 90,
 
+		CANVAS_WIDTH = 725,
+		CANVAS_HEIHT = 1250,
+
+		DEF_BACKGROUND_COLOR = '#FFF',
 		DEF_STROKE_COLOR = '#000',
 		DEF_FILL_COLOR = '#000',
 		DEF_BOX_COLOR = '#FFF',
@@ -25,8 +29,8 @@
 
 	// canvas
 	var c = document.createElement('canvas');
-	c.width = 725;
-	c.height = 1250;
+	c.width = CANVAS_WIDTH;
+	c.height = CANVAS_HEIHT;
 	var ctx = c.getContext('2d');
 	ctx.strokeStyle = DEF_STROKE_COLOR;
 	ctx.fillStyle = DEF_FILL_COLOR;
@@ -36,24 +40,41 @@
 	var currentDate = new Date();
 	var bDate = null;
 
-	clearCanvas();
-	drawTitle();
-	drawAxis();
-	drawMetric();
-
 	// public
 	window.LC = {
-		init: function (element) {
+		init: function (element, lang) {
 			element.appendChild(c);
-			this.update(null);
+
+			if (!!lang) {
+				this.changeLang(lang);
+			} else {
+				resetCanvas();
+				this.update(null);
+			}
 		},
 		update: function (_bDate) {
 			bDate = _bDate || new Date();
 
 			drawTable(COUNT_YEARS, COUNT_WEEKS, generateDates());
+		},
+		changeTheme: function (theme) {
+
+			DEF_STROKE_COLOR = theme.box.borderColor;
+			DEF_BOX_COLOR = theme.box.backgroundDefaultColor;
+			PASTDAY_COLOR = theme.box.backgroundPastDayColor;
+
+			drawTable(COUNT_YEARS, COUNT_WEEKS, generateDates());
+		},
+		changeLang: function (lang) {
+			TITLE_TEXT = lang.title;
+			AXIS_LEFT_TEXT = lang.left_text;
+			AXIS_TOP_TEXT = lang.top_text;
+
+			resetCanvas();
+			this.update(null);
 		}
 	};
-	
+
 
 	// CALENDAR
 
@@ -69,7 +90,7 @@
 		}
 		return years;
 	}
-	
+
 	function getDayObj(year, week) {
 		var weeks = year * COUNT_WEEKS + week;
 		var date = addDays(bDate, weeks * 7);
@@ -85,8 +106,19 @@
 
 	// CANVAS
 
+	function resetCanvas () {
+		clearCanvas();
+		drawTitle();
+		drawAxis();
+		drawMetric();
+	}
+
 	function clearCanvas () {
-		ctx.clearRect(0, 0, c.width, c.height);
+		ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIHT);
+		// draw background:
+		ctx.fillStyle = DEF_BACKGROUND_COLOR;
+		ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIHT);
+		ctx.fillStyle = DEF_FILL_COLOR;
 	}
 	function drawTitle () {
 		ctx.textAlign = 'center';
@@ -132,6 +164,7 @@
 		for (var i = 0; i < cols; i++) {
 			// color by type
 			ctx.fillStyle = values[i].isPast ? PASTDAY_COLOR : DEF_BOX_COLOR;
+			ctx.strokeStyle = DEF_STROKE_COLOR;
 
 			drawRect(TABLE_LEFT + i * BOX_SIZE, TABLE_TOP + row * BOX_SIZE);
 		}
