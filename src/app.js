@@ -4,7 +4,7 @@
 	var DEFAULT_CALENDAR_FILE_NAME = 'my-life-calendar',
 		DEFAULT_IMAGE_TYPE = 'image/jpeg',
 
-		date = document.getElementById('b-date'),
+		datePicker,
 		theme = document.getElementById('theme'),
 		lang = document.getElementById('lang'),
 		block = document.getElementById('life-calendar'),
@@ -38,8 +38,25 @@
 
 		langs = [
 			{
+				months: [
+					'Январь',
+					'Февраль',
+					'Март',
+					'Апрель',
+					'Май',
+					'Июнь',
+					'Июль',
+					'Август',
+					'Сентябрь',
+					'Октябрь',
+					'Ноябрь',
+					'Декабрь'
+				],
 				settings: {
 					lang_set_birthday: "Дата вашего рождения:",
+					dp_day: "День",
+					dp_month: "Месяц",
+					dp_year: "Год",
 					lang_set_theme: "Дизайн календаря:",
 					lang_select_lang: "Язык:",
 					lang_save_print: "Сохранение или печать:",
@@ -54,8 +71,25 @@
 				}
 			},
 			{
+				months: [
+					'January',
+					'February',
+					'March',
+					'April',
+					'May',
+					'June',
+					'July',
+					'August',
+					'September',
+					'October',
+					'November',
+					'December'
+				],
 				settings: {
 					lang_set_birthday: "Set your birthday:",
+					dp_day: "Day",
+					dp_month: "Month",
+					dp_year: "Year",
 					lang_set_theme: "Select theme:",
 					lang_select_lang: "Select language:",
 					lang_save_print: "Save or print:",
@@ -71,16 +105,12 @@
 			}
 		];
 
+
+	datePicker = selectionDate(LC.update, langs[0].months);
+
 	updateLang(langs[0].settings);
 	LC.init(block, langs[0].calendar);
 
-	date.onchange = function (e) {
-		var date = new Date(Date.parse(e.target.value));
-
-		LC.update(date);
-
-		return false;
-	};
 
 	theme.onchange = function (e) {
 		var themeId = e.target.value || 0;
@@ -92,6 +122,8 @@
 	lang.onchange = function (e) {
 		var langId = e.target.value || 0;
 		var lang = langs[langId];
+
+		datePicker = selectionDate(LC.update, lang.months);
 
 		updateLang(lang.settings);
 		LC.changeLang(lang.calendar);
@@ -130,7 +162,11 @@
 		{
 			if (lang.hasOwnProperty(key)) {
 				var element = document.getElementById(key);
-				element.textContent = lang[key];
+				if (element != null) {
+					element.textContent = lang[key];
+				} else {
+					console.error('[updateLang] ' + key);
+				}
 			}
 		}
 	}
