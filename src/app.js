@@ -1,3 +1,4 @@
+/* global selectionDate */
 /* global LC */
 (function(){
 
@@ -7,7 +8,7 @@
 		datePicker,
 		theme = document.getElementById('theme'),
 		lang = document.getElementById('lang'),
-		block = document.getElementById('life-calendar'),
+		block = document.getElementById('calendar-canvas'),
 		saveImage = document.getElementById('lang_save_jpg'),
 		savePdf = document.getElementById('lang_save_pdf'),
 		printPage = document.getElementById('lang_print'),
