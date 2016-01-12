@@ -1,0 +1,51 @@
+
+/* Print */
+
+@page
+{
+	size: auto;   /* auto is the current printer page size */
+	margin: 0mm;  /* this affects the margin in the printer settings */
+}
+
+/* Customize bootstrap */
+
+.form-control {
+	padding: 0 0 0 4px;
+}
+
+/* Date picker */
+
+#sdate-picker {
+	font-size: 0;
+}
+#sdate-picker .form-control {
+	display: inline-block;
+}
+#sdate-day {
+	width: 25%;
+}
+#sdate-month {
+	width: 50%;
+	border-left: none;
+	border-right: none;
+}
+#sdate-year {
+	width: 25%;
+}
+
+/* Page */
+
+label {
+	font-weight: normal;
+}
+canvas {
+	max-width: 100%;
+}
+
+#settings {
+	margin-top: 20px;
+}
+
+#life-calendar {
+	margin-top: 20px;
+}

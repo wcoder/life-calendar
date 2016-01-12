@@ -48,9 +48,9 @@
     "@padding-xs-horizontal": "5px",
     "@line-height-large": "1.3333333",
     "@line-height-small": "1.5",
-    "@border-radius-base": "4px",
-    "@border-radius-large": "6px",
-    "@border-radius-small": "3px",
+    "@border-radius-base": "0",
+    "@border-radius-large": "0",
+    "@border-radius-small": "0",
     "@component-active-color": "#fff",
     "@component-active-bg": "@brand-primary",
     "@caret-width-base": "4px",
@@ -390,11 +390,8 @@
     "responsive-utilities.less",
     "button-groups.less",
     "input-groups.less",
-    "labels.less",
-    "badges.less",
-    "responsive-embed.less",
-    "wells.less"
+    "responsive-embed.less"
   ],
   "js": [],
-  "customizerUrl": "http://getbootstrap.com/customize/?id=55f67100f4ad433c4f8f"
+  "customizerUrl": "http://getbootstrap.com/customize/?id=7e132348190794cb14ca"
 }
