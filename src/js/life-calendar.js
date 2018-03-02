@@ -29,12 +29,26 @@
 
 	// canvas
 	var c = document.createElement('canvas');
-	c.width = CANVAS_WIDTH;
-	c.height = CANVAS_HEIHT;
 	var ctx = c.getContext('2d');
 	ctx.strokeStyle = DEF_STROKE_COLOR;
 	ctx.fillStyle = DEF_FILL_COLOR;
 	ctx.font = '13px sans-serif';
+
+	// set ratio
+	var ratio = calculateRatio(window, ctx);
+
+	if (ratio === 1) {
+		c.width = CANVAS_WIDTH;
+		c.height = CANVAS_HEIHT;
+	} else {
+		c.width = CANVAS_WIDTH * ratio;
+		c.height = CANVAS_HEIHT * ratio;
+
+		c.style.width = CANVAS_WIDTH + 'px';
+		c.style.height = CANVAS_HEIHT + 'px';
+
+		ctx.scale(ratio, ratio);
+	}
 
 	// dates
 	var currentDate = new Date();
@@ -122,7 +136,7 @@
 	}
 	function drawTitle () {
 		ctx.textAlign = 'center';
-		ctx.fillText(TITLE_TEXT, c.width / 2, 20);
+		ctx.fillText(TITLE_TEXT, CANVAS_WIDTH / 2, 20);
 	}
 	function drawAxis (textLeft, textTop) {
 		ctx.textAlign = 'left';
@@ -172,6 +186,16 @@
 	function drawRect (x, y) {
 		ctx.fillRect(_px + x, _px + y, BOX_SIZE_REAL, BOX_SIZE_REAL);
 		ctx.strokeRect(_px + x, _px + y, BOX_SIZE_REAL, BOX_SIZE_REAL);
+	}
+
+	function calculateRatio (w, context) {
+		var devicePixelRatio = w.devicePixelRatio || 1;
+		var backingStoreRatio = context.webkitBackingStorePixelRatio ||
+				context.mozBackingStorePixelRatio ||
+				context.msBackingStorePixelRatio ||
+				context.oBackingStorePixelRatio ||
+				context.backingStorePixelRatio || 1;
+		return devicePixelRatio / backingStoreRatio;
 	}
 
 }());
