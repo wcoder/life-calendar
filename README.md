@@ -1,3 +1,5 @@
+<p align="center"><img src="logo/horizontal.png" alt="life-calendar" height="175px"></p>
+
 # life-calendar.js
 Online calendar of your Life in Weeks.
 
