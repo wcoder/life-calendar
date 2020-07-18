@@ -1,30 +1,16 @@
-var gulp = require('gulp');
-var runSequence = require('run-sequence');
-var clean = require('gulp-clean');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var cssnano = require('gulp-cssnano');
-var minifyHTML = require('gulp-minify-html');
+const gulp = require('gulp');
+const clean = require('gulp-clean');
+const concat = require('gulp-concat');
+const uglify = require('gulp-uglify');
+const cleanCSS = require('gulp-clean-css');
+const htmlmin = require('gulp-htmlmin');
 
-gulp.task('default', function() {
-	// place code for your default task here
-});
-
-gulp.task('build', function(callback) {
- 	runSequence(
-		'build-clean',
-		'build-js',
-		'build-css',
-		'build-html',
-		callback);
-});
-
-gulp.task('build-clean', function() {
+gulp.task('clean', () => {
 	return gulp.src('dist').pipe(clean());
 });
 
-gulp.task('build-js', function() {
-	gulp.src([
+gulp.task('scripts', () => {
+	return gulp.src([
 		'src/vendor/jspdf/jspdf.min.js',
 		'src/vendor/sdate/sdate.js',
 		'src/js/life-calendar.js',
@@ -35,18 +21,29 @@ gulp.task('build-js', function() {
 	.pipe(gulp.dest('dist'))
 });
 
-gulp.task('build-css', function() {
+gulp.task('styles', () => {
 	return gulp.src([
 		'src/vendor/bootstrap/css/bootstrap.min.css',
 		'src/css/main.css'
 	])
 	.pipe(concat('styles.min.css'))
-	.pipe(cssnano())
+	.pipe(cleanCSS())
 	.pipe(gulp.dest('dist'));
 });
 
-gulp.task('build-html', function() {
+gulp.task('html', () => {
 	return gulp.src('src/index.html')
-		.pipe(minifyHTML({ empty: true }))
+		.pipe(htmlmin({ collapseWhitespace: true }))
 		.pipe(gulp.dest('dist'));
 });
+
+gulp.task('build',
+	gulp.series(
+		'clean',
+		'scripts',
+		'styles',
+		'html',
+	)
+);
+
+gulp.task('default', gulp.series('build'));
