@@ -34,6 +34,13 @@
 					backgroundDefaultColor: '#FFF',
 					backgroundPastDayColor: '#a52126',
 				}
+			},
+			{
+				box: {
+					borderColor: '#CCC',
+					backgroundDefaultColor: '#ebedf0',
+					backgroundPastDayColor: '#30a14e',
+				}
 			}
 		],
 
