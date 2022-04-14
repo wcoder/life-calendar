@@ -37,9 +37,9 @@
 			},
 			{
 				box: {
-					borderColor: '#CCC',
+					borderColor: '#DCDCDC',
 					backgroundDefaultColor: '#ebedf0',
-					backgroundPastDayColor: '#30a14e',
+					backgroundPastDayColor: '#40c463',
 				}
 			}
 		],
