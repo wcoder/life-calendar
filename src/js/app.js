@@ -110,7 +110,40 @@
 					left_text: '← Age',
 					top_text: 'Week of the Year →'
 				}
-			}
+			},
+			{
+				months: [
+					'1月',
+					'2曰',
+					'3月',
+					'4月',
+					'5月',
+					'6月',
+					'7月',
+					'8月',
+					'9月',
+					'10月',
+					'11月',
+					'12月'
+				],
+				settings: {
+					lang_set_birthday: "设置您的生日:",
+					dp_day: "日",
+					dp_month: "月",
+					dp_year: "年",
+					lang_set_theme: "选择一个主题:",
+					lang_select_lang: "选择一个语言:",
+					lang_save_print: "保存或打印:",
+					lang_save_jpg: "JPG",
+					lang_save_pdf: "PDF",
+					lang_print: "打印",
+				},
+				calendar: {
+					title: '人生日历',
+					left_text: '← 年龄',
+					top_text: '一年中的第几周 →'
+				}
+			},
 		];
 
 
