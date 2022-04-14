@@ -1,6 +1,6 @@
 /* global selectionDate */
 /* global LC */
-(function(){
+(function(w,d){
 
 	var DEFAULT_CALENDAR_FILE_NAME = 'my-life-calendar',
 		DEFAULT_IMAGE_TYPE = 'image/jpeg',
@@ -147,27 +147,44 @@
 		];
 
 
-	datePicker = selectionDate(LC.update, langs[0].months);
 
-	updateLang(langs[0].settings);
-	LC.init(block, langs[0].calendar);
+	// init language
+	var initLangIndex = getKey('lang', 0);
+	var defaultLang = langs[initLangIndex];
+	datePicker = selectionDate(updateDate, defaultLang.months);
 
+	LC.init(block, defaultLang.calendar);
+	updateLang(defaultLang.settings);
+	lang.value = initLangIndex;
+
+
+	// init theme
+	var defaultThemeIndex = getKey('theme', 0);
+	var defaultTheme = themes[defaultThemeIndex];
+	theme.value = defaultThemeIndex;
+	LC.changeTheme(defaultTheme);
+
+	// init date
+	restoreDate();
 
 	theme.onchange = function (e) {
 		var themeId = e.target.value || 0;
 		var theme = themes[themeId];
 
 		LC.changeTheme(theme);
+		saveKey('theme', themeId);
 	};
 
 	lang.onchange = function (e) {
 		var langId = e.target.value || 0;
 		var lang = langs[langId];
 
-		datePicker = selectionDate(LC.update, lang.months);
+		datePicker = selectionDate(updateDate, lang.months);
+		restoreDate();
 
 		updateLang(lang.settings);
 		LC.changeLang(lang.calendar);
+		saveKey('lang', langId);
 	};
 
 	saveImage.onclick = function (e) {
@@ -198,6 +215,18 @@
 		return block.querySelector('canvas').toDataURL(DEFAULT_IMAGE_TYPE);
 	}
 
+	function updateDate(date) {
+		LC.update(date);
+		saveKey('date', date.getTime());
+	}
+
+	function restoreDate() {
+		var defaultDate = getKey('date', null);
+		if (!!defaultDate) {
+			datePicker.setDate(new Date(parseInt(defaultDate)));
+		}
+	}
+
 	function updateLang(lang) {
 		for (var key in lang)
 		{
@@ -211,4 +240,13 @@
 			}
 		}
 	}
-}());
+
+	function saveKey(key, value) {
+		w.localStorage.setItem(key, value);
+	}
+
+	function getKey(key, defaultValue) {
+		var value = w.localStorage.getItem(key);
+		return !!value ? value : defaultValue;
+	}
+}(window, document));
