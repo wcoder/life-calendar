@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "dependencies": {},
   "devDependencies": {
     "gulp": "^4.0.2",
     "gulp-clean": "^0.4.0",
