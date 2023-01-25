@@ -127,6 +127,39 @@
 					'12月'
 				],
 				settings: {
+					lang_set_birthday: "設定您的生日:",
+					dp_day: "日",
+					dp_month: "月",
+					dp_year: "年",
+					lang_set_theme: "選擇一個主題:",
+					lang_select_lang: "選擇一個語言:",
+					lang_save_print: "保存或列印:",
+					lang_save_jpg: "JPG",
+					lang_save_pdf: "PDF",
+					lang_print: "列印",
+				},
+				calendar: {
+					title: '一生週行事曆',
+					left_text: '← 年齡',
+					top_text: '一年中的第幾周 →'
+				}
+			},
+			{
+				months: [
+					'1月',
+					'2曰',
+					'3月',
+					'4月',
+					'5月',
+					'6月',
+					'7月',
+					'8月',
+					'9月',
+					'10月',
+					'11月',
+					'12月'
+				],
+				settings: {
 					lang_set_birthday: "设置您的生日:",
 					dp_day: "日",
 					dp_month: "月",
